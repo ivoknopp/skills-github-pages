@@ -1,0 +1,24 @@
+---
+title: "Second blog post this day, ubelieveble"
+date: 2026-03-24
+---
+
+```C#
+[Function("CosmosTrigger")]
+public void Run([CosmosDBTrigger(
+    databaseName: "ToDoItems",
+    containerName:"TriggerItems",
+    Connection = "CosmosDBConnection",
+    LeaseContainerName = "leases",
+    CreateLeaseContainerIfNotExists = true)] IReadOnlyList<ToDoItem> todoItems,
+    FunctionContext context)
+{
+    if (todoItems is not null && todoItems.Any())
+    {
+        foreach (var doc in todoItems)
+        {
+            _logger.LogInformation("ToDoItem: {desc}", doc.Description);
+        }
+    }
+}
+```
